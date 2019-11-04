@@ -1,0 +1,43 @@
+int SortiranjeListe(studenti* head /*pokStart*/)
+{
+	studenti* first = NULL;  // point
+	studenti* previousFirst = NULL; // pPoint
+  studenti* second = NULL;
+	studenti* last = NULL; // zPoint
+	studenti* temp = NULL; // You dont need this variable
+
+  // Check if list contains more than 2 elements
+  if (head->next != NULL && head->next->next == NULL)
+  {
+    return RETURN_OK;
+  }
+  
+	while (head->next != last)
+	{
+		previousFirst = head;
+		first = previousFirst->next; // Or head->next, whatever you like
+
+		while (first->next != last)
+		{
+      second = first->next;
+      
+			if (_strcmpi(first->prezime, second->prezime) > 0) // You are not always checking 2 neighbours
+			{
+				previousFirst->next = second;
+				first->next = second->next;
+				second->next = first;
+			}
+      else
+      {
+        first = first->next;
+      }
+			
+		}
+      // Move lastSorted 1 step backwards, because everything after lastSorted
+      // (including lastSorted) is alredy sorted
+      lastSorted = previousFirst->next;
+	}
+
+	printf("Lista je sortirana po prezimenu.\n");
+	return 0;
+}
