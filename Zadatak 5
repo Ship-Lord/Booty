@@ -1,0 +1,141 @@
+#define CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct _Node;
+typedef struct _Node * Position;
+struct _Node
+{
+	int element;
+	Position next;
+};
+int ReadFromFile(Position P);
+int Print(Position P);
+int Presjek(Position List1,Position List2,Position P);
+int Unija(Position List1, Position List2, Position U);
+
+int main()
+{
+	int pick = 0;
+	printf("Kako zelite ucitati podatke?\n\n");
+	printf("1. Ucitavanje iz filea\n");
+	printf("2. Unijeti samostalno\n");
+	printf("Vas odabir: \n");
+	scanf(" %d", &pick);
+
+	if (pick == 1)
+	{
+		if (ReadFromFile == -1)
+		{
+			printf("Korisnik izlazi iz programa...");
+			return 0;
+		}
+	}
+	else if (pick == 2)
+	{
+
+	}
+	else
+	{
+		printf("Nepravilan unos");
+		return 0;
+	}
+	system("pause");
+	return 0;
+}
+
+int ReadFromFile(Position P)
+{
+	FILE* f1 = NULL;
+	char ime_filea[256] = { '\0' };
+	Position q,temp;
+
+	do
+	{
+	printf("Unesite ime file kojeg zelite otvoriti: ");
+	scanf(" %s",ime_filea);
+
+	f1 = fopen(ime_filea, "r");
+	if (f1 == NULL)
+	{
+		printf("Greska pri otvaranju filea,pokusajte ponovno!!!\n");
+		printf("Za izlaz iz programa pritisnite 0");
+	}
+	else if(ime_filea == 0)
+	{
+		return -1;
+	}
+	else
+	{
+		while (!feof(f1))
+		{
+			q = (Position)malloc(sizeof(Position));
+			if (q == NULL)
+			{
+				printf("Memorija nije alocirana!!!");
+				free(q);
+			}
+			else
+			{
+				fscanf(f1, "%d", &q->element);
+
+				temp = P;
+				while (temp->next != NULL && temp->next->element > q->element);
+				{
+					temp = temp->next;
+				}
+				q->next = temp->next;
+				temp->next = q;
+			}
+		}
+		fclose(f1);
+	}
+	} while (f1 == NULL);
+	return 0;
+}
+int Print(Position P)
+{
+	while(P!=NULL)
+	{
+		printf(" %d", P->element);
+		P = P->next;
+	}
+	return 0;
+}
+int Presjek(Position List1,Position List2,Position P)
+{
+	Position q;
+	while (List1 !=NULL && List2 != NULL)
+	{
+		if (List1->element > List2->element)
+		{
+			List1 = List1->next;
+		}
+		else if (List1->element < List2->element)
+		{
+			List2 = List2->next;
+		}
+		else
+		{
+			q = (Position)malloc(sizeof(struct _Node));
+			if (q == NULL)
+				printf("Greska u alokaciji memorije!!!");
+			else
+			{
+				q->element = List1->element;
+				q->next = P->next;
+				P->next = q;
+
+				P = q;
+			}
+			List1 = List1->next;
+			List2 = List2->next;
+		}
+	}
+	return 0;
+}
+int Presjek(Position List1, Position List2, Position U)
+{
+
+}
